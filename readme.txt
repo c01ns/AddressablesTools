@@ -24,11 +24,13 @@ Supported versions:
 
 * - This support has not been thoroughly tested 
 
+Binary catalogs are written back using the catalog version they were read with. This keeps older Binv1 catalogs compatible when tools such as `patchcrc` rewrite them.
+
 ---
 
 To use the "Example" command line app to...
 
-- patch catalog CRCs, run `Example patchcrc path/to/catalog.json` (replace .json with .bin if your game uses .bin)
+- patch catalog CRCs, run `Example patchcrc path/to/catalog.json` (replace .json with .bin or .bundle if your game uses those formats)
 - search for assets, run `Example searchasset path/to/catalog.json` and then type the key to search for
 
 ---
@@ -54,7 +56,7 @@ The "Example" program contains two tools: searchasset and patchcrc.
 
 The searchasset command takes an argument to the catalog.json or catalog.bundle file. It will then ask you for a string to search for and will display any results that it finds.
 
-The patchcrc command also takes an argument to catalog.json or catalog.bundle. It sets the m_Crc of all entries to 0, effectively disabling all CRC checks.
+The patchcrc command also takes an argument to catalog.json, catalog.bin, or catalog.bundle. It sets the m_Crc of all entries to 0, effectively disabling all CRC checks.
 
 ---
 

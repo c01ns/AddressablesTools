@@ -364,7 +364,7 @@ namespace AddressablesTools.Catalog
             header.Write(writer); // empty header
 
             header.Magic = 0x0de38942;
-            header.Version = 2;
+            header.Version = Version == 0 ? 2 : Version;
             header.KeysOffset = (uint)writer.BaseStream.Position + 4;
             writer.Reserve(4 + Resources.Count * 4 * 2); // empty key list + length
 
@@ -379,7 +379,10 @@ namespace AddressablesTools.Catalog
             }
 
             header.InitObjectsArrayOffset = writer.WriteOffsetArray(initObjectsOffsets);
-            header.BuildResultHashOffset = writer.WriteEncodedString(BuildResultHash);
+            if (header.Version == 1 && string.IsNullOrEmpty(BuildResultHash))
+                header.BuildResultHashOffset = uint.MaxValue;
+            else
+                header.BuildResultHashOffset = writer.WriteEncodedString(BuildResultHash);
 
             WriteResources(writer, header, staCont);
 
